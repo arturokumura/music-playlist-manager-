@@ -10,7 +10,6 @@ typedef struct {
     int quantidade;
 } Playlist;
 
-/*2) Implemente a função abaixo para inicializar a playlist, dizendo que ela está criada e pronta para receber músicas*/
 void iniciarPlaylist(Playlist *playlist) {
     playlist->dados = nullptr;
     playlist->quantidade = 0;
