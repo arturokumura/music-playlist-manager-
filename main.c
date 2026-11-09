@@ -125,5 +125,23 @@ void ordenarPorId(Playlist *playlist) {
     }
 }
 
+void ordenarPorDuracao(Playlist *playlist) {
+    for(int i=0; i<playlist->quantidade-1; i++) {
+        int swipped = 0;
+        for(int j=0; j<playlist->quantidade-i-1; j++) {
+            if(strcmp(playlist->dados[j].duracao , playlist->dados[j+1].duracao) > 0) {
+                Musica temp = playlist->dados[j];
+                playlist->dados[j] = playlist->dados[j+1];
+                playlist->dados[j+1] = temp;
+                swipped = 1;
+            }
+        }
+        if(swipped == 0) {
+            break;
+        }
+    }
+    printf("Ordenacao realizada com sucesso!\n");
+}
+
                 break;
 }
