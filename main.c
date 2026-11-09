@@ -204,5 +204,38 @@ int removerMusica(Playlist *playlist, char id[], Musica *musica) {
     return 1;
 }
 
+int duracaoTotal(Playlist *playlist) {
+    int totalSegundos = 0;
+    for(int i = 0; i < playlist->quantidade; i++) {
+        int minutos = 0, segundos = 0;
+        sscanf(playlist->dados[i].duracao, "%d:%d", &minutos, &segundos);
+        totalSegundos += (minutos * 60) + segundos;
+    }
+    return totalSegundos; 
+}
+
+int salvar(Playlist *playlist) {
+    FILE *arq = fopen("playlists.bin", "wb");
+    if(arq == NULL) {
+        printf("Erro ao abrir arquivo!\n");
+        return 0;
+    }
+
+    if(fwrite(&playlist->quantidade, sizeof(int), 1, arq) != 1) {
+        printf("Erro ao escrever arquivo!\n");
+        fclose(arq);
+        return 0;
+    }
+
+    if(fwrite(playlist->dados, sizeof(Musica), playlist->quantidade, arq) != playlist->quantidade) {
+        printf("Erro ao escrever arquivo!\n");
+        fclose(arq);
+        return 0;
+    }
+
+    fclose(arq);
+    return 1;
+}
+
                 break;
 }
