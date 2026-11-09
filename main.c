@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
     char id[10];
@@ -41,4 +42,5 @@ int carregarDados(Playlist *playlist) {
     
     fclose(arq);
     return 1;
+                break;
 }
