@@ -143,5 +143,32 @@ void ordenarPorDuracao(Playlist *playlist) {
     printf("Ordenacao realizada com sucesso!\n");
 }
 
+Musica* buscarMusica(Playlist *playlist, char id[]) {
+    ordenarPorId(playlist);
+    int inicio = 0;
+    int fim = playlist->quantidade -1;
+    int meio;
+    int achou = 0;
+
+    while(fim >= inicio) {
+        meio = (inicio + fim) / 2;
+
+        if(strcmp(playlist->dados[meio].id , id) == 0) {
+            achou = 1;
+            break;
+        }
+
+        if(strcmp(playlist->dados[meio].id , id) > 0) {
+            fim = meio - 1;
+        } else {
+            inicio = meio + 1;
+        }
+    }
+    if(achou == 1) {
+        return &playlist->dados[meio];
+    }
+    return NULL;
+}
+
                 break;
 }
