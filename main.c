@@ -237,5 +237,13 @@ int salvar(Playlist *playlist) {
     return 1;
 }
 
+void liberarMemoria(Playlist *playlist) {
+    if(playlist->dados != NULL) {
+        free(playlist->dados);
+        playlist->dados = NULL;
+    }
+    playlist->quantidade = 0;
+}
+
                 break;
 }
