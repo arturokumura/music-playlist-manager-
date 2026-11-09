@@ -14,6 +14,20 @@ typedef struct {
     int quantidade;
 } Playlist;
 
+void printarOperacoes() {
+    printf("-------------------------------\n");
+    printf("1. Cadastrar musica\n");
+    printf("2. Listar musicas\n");
+    printf("3. Buscar musica\n");
+    printf("4. Ordenar por duracao\n");
+    printf("5. Ordenar por id\n");
+    printf("6. Remover música\n");
+    printf("7. Duracao total\n");
+    printf("8. Salvar\n");
+    printf("0. Sair\n");
+    printf("-------------------------------\n");
+}
+
 void iniciarPlaylist(Playlist *playlist) {
     playlist->dados = nullptr;
     playlist->quantidade = 0;
