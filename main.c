@@ -110,5 +110,20 @@ void listarMusicas(Playlist *playlist) {
         }
     }
 }
+
+void ordenarPorId(Playlist *playlist) {
+    for(int i=0; i<playlist->quantidade-1; i++) {
+        int menor_ind = i;
+        for(int j=i+1; j<playlist->quantidade; j++) {
+            if(strcmp(playlist->dados[j].id , playlist->dados[menor_ind].id) < 0){
+                menor_ind = j;
+            }
+        }
+        Musica temp = playlist->dados[i];
+        playlist->dados[i] = playlist->dados[menor_ind];
+        playlist->dados[menor_ind] = temp;
+    }
+}
+
                 break;
 }
