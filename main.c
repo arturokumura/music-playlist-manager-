@@ -245,5 +245,110 @@ void liberarMemoria(Playlist *playlist) {
     playlist->quantidade = 0;
 }
 
+int main() {
+    Playlist playlist;
+    iniciarPlaylist(&playlist);
+    carregarDados(&playlist);
+    int opcao = -1;
+
+    while(opcao != 0) {
+        printarOperacoes();
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+        getchar();
+
+        switch(opcao) {
+            case 1: {
+                Musica musica;
+                printf("-----------------Cadastrar musica-----------------\n");
+                printf("Id: ");
+                fgets(musica.id, sizeof(musica.id), stdin);
+                musica.id[strcspn(musica.id, "\n")] = '\0';
+
+                printf("Titulo: ");
+                fgets(musica.titulo, sizeof(musica.titulo), stdin);
+                musica.titulo[strcspn(musica.titulo, "\n")] = '\0';
+
+                printf("Artista: ");
+                fgets(musica.artista, sizeof(musica.artista), stdin);
+                musica.artista[strcspn(musica.artista, "\n")] = '\0';
+
+                printf("Duracao (xx:yy): ");
+                fgets(musica.duracao, sizeof(musica.duracao), stdin);
+                musica.duracao[strcspn(musica.duracao, "\n")] = '\0';
+
+                if(cadastrarMusica(&playlist, &musica) == 1) {
+                    printf("Musica cadastrada com sucesso!\n");
+                }
                 break;
+            }
+            case 2:
+                listarMusicas(&playlist);
+                break;
+            case 3: {
+                Musica *musicaEncontrada;
+                char idBusca[10];
+                printf("-----------------Buscar musica-----------------\n");
+                printf("Id: ");
+                fgets(idBusca, sizeof(idBusca), stdin);
+                idBusca[strcspn(idBusca, "\n")] = '\0';
+
+                musicaEncontrada = buscarMusica(&playlist, idBusca);
+                if(musicaEncontrada != NULL) {
+                    printf("Musica encontrada!\n");
+                    printf("Id: %s\n", musicaEncontrada->id);
+                    printf("Titulo: %s\n", musicaEncontrada->titulo);
+                    printf("Artista: %s\n", musicaEncontrada->artista);
+                    printf("Duracao: %s\n", musicaEncontrada->duracao);
+                } else {
+                    printf("Musica nao encontrada!\n");
+                }
+                break;
+            }
+            case 4: {
+                ordenarPorDuracao(&playlist);
+                printf("Ordenacao realizada com sucesso!\n");
+                break;
+            }
+            case 5: {
+                ordenarPorId(&playlist);
+                printf("Ordenacao realizada com sucesso!\n");
+                break;
+            }
+            case 6: {
+                    Musica musica;
+                    char idExcluir[10];
+                    printf("-----------------Remover musica-----------------\n");
+                    printf("Id: ");
+                    fgets(idExcluir, sizeof(idExcluir), stdin);
+                    idExcluir[strcspn(idExcluir, "\n")] = '\0';
+
+                    if(removerMusica(&playlist, idExcluir, &musica) == 1) {
+                        printf("Musica removida com sucesso!\n");
+                        printf("Id: %s\n", musica.id);
+                        printf("Titulo: %s\n", musica.titulo);
+                        printf("Artista: %s\n", musica.artista);
+                        printf("Duracao: %s\n", musica.duracao);
+                    }
+                    break;
+            }
+            case 7:
+                printf("-----------------Duracao total-----------------\n");
+                int tempo = duracaoTotal(&playlist);
+                int min = tempo / 60;
+                int seg = tempo % 60;
+                printf("Duracao: %d:%d", min, seg);
+                break;
+            case 8:
+                salvar(&playlist);
+                printf("Dados salvos com sucesso!\n");
+                break;
+            case 0:
+                liberarMemoria(&playlist);
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opcao invalida! Tente novamente!\n");
+        }
+    }
 }
