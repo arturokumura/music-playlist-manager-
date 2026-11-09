@@ -36,25 +36,33 @@ void iniciarPlaylist(Playlist *playlist) {
 int carregarDados(Playlist *playlist) {
     FILE *arq = fopen("playlists.bin", "rb");
     if(arq == NULL) {
-        printf("Erro ao abrir arquivo!\n");
+        return 0;
+    }
+
+    if(fread(&playlist->quantidade, sizeof(int), 1, arq) != 1) {
         fclose(arq);
         return 0;
     }
 
-    fread(&playlist->quantidade, sizeof(int), 1 , arq);
-
     if(playlist->quantidade == 0) {
+        fclose(arq);
         return 0;
     }
 
     playlist->dados = malloc(playlist->quantidade * sizeof(Musica));
     if(playlist->dados == NULL) {
         printf("Erro ao alocar memoria!\n");
-        free(playlist->dados);
+        fclose(arq);
+        return 0;
+    }
+
+    if(fread(playlist->dados, sizeof(Musica), playlist->quantidade, arq) != playlist->quantidade) {
+        fclose(arq);
         return 0;
     }
     
     fclose(arq);
     return 1;
+}
                 break;
 }
