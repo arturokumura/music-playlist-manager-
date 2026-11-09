@@ -170,5 +170,39 @@ Musica* buscarMusica(Playlist *playlist, char id[]) {
     return NULL;
 }
 
+int removerMusica(Playlist *playlist, char id[], Musica *musica) {
+    int ind = -1;
+    for(int i=0; i<playlist->quantidade; i++) {
+        if(strcmp(playlist->dados[i].id , id) == 0) {
+            ind = i;
+            break;
+        }
+    }
+
+    if(ind == -1) {
+        printf("Musica nao encontrada!\n");
+        return 0; 
+    }
+
+    *musica = playlist->dados[ind];
+
+    for(int j= ind; j<playlist->quantidade-1; j++) {
+        playlist->dados[j] = playlist->dados[j+1];
+    }
+    playlist->quantidade--;
+
+    if(playlist->quantidade == 0) {
+        free(playlist->dados);
+        playlist->dados = NULL;
+    } else {
+        Musica *playlist_temp = realloc(playlist->dados, playlist->quantidade * sizeof(Musica));
+
+        if(playlist_temp != NULL) {
+            playlist->dados = playlist_temp;
+        }
+    }
+    return 1;
+}
+
                 break;
 }
