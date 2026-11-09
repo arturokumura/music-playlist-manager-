@@ -29,7 +29,7 @@ void printarOperacoes() {
 }
 
 void iniciarPlaylist(Playlist *playlist) {
-    playlist->dados = nullptr;
+    playlist->dados = NULL;
     playlist->quantidade = 0;
 }
 
