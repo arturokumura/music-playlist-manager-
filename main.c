@@ -96,5 +96,19 @@ int cadastrarMusica(Playlist *playlist, Musica *musica) {
     return 1;
 }
 
+void listarMusicas(Playlist *playlist) {
+    if(playlist->quantidade == 0) {
+        printf("Nenhuma musica cadastrada!\n");
+    } else {
+        printf("=================================\n");
+        for(int i=0; i<playlist->quantidade; i++) {
+            printf("=================================\n");
+            printf("Id: %s\n", playlist->dados[i].id);
+            printf("Titulo: %s\n", playlist->dados[i].titulo);
+            printf("Artista: %s\n", playlist->dados[i].artista);
+            printf("Duracao: %smin\n", playlist->dados[i].duracao);
+        }
+    }
+}
                 break;
 }
