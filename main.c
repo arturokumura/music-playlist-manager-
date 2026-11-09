@@ -64,5 +64,37 @@ int carregarDados(Playlist *playlist) {
     fclose(arq);
     return 1;
 }
+
+int cadastrarMusica(Playlist *playlist, Musica *musica) {
+    if(playlist == NULL || musica == NULL) {
+        printf("Erro ao cadastrar musica\n");
+        return 0;
+    }
+
+    if(musica->id[0] == '\0') {
+        printf("O id nao pode ser vazio!\n");
+        return 0;
+    }
+
+    for(int i = 0; i < playlist->quantidade; i++) {
+        if(strcmp(playlist->dados[i].id, musica->id) == 0) {
+            printf("Ja existe uma musica com esse id!\n");
+            return 0;
+        }
+    }
+
+
+    Musica *playlist_temp = realloc(playlist->dados, (playlist->quantidade + 1) * sizeof(Musica));
+    if(playlist_temp == NULL) {
+        printf("Erro ao alocar memoria!\n");
+        return 0;
+    }
+
+    playlist->dados = playlist_temp;
+    playlist->dados[playlist->quantidade] = *musica;
+    playlist->quantidade++;
+    return 1;
+}
+
                 break;
 }
